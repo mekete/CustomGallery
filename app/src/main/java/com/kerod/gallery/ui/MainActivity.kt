@@ -15,7 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.kerod.gallery.state.FolderListViewModel
+import com.kerod.gallery.state.MediaStoreViewModel
 import com.kerod.gallery.ui.theme.AppTheme
 import android.os.Build
 import android.provider.Settings
@@ -31,7 +31,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: FolderListViewModel by viewModels()
+    private val viewModel: MediaStoreViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 23)

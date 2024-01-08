@@ -26,7 +26,7 @@ import java.util.Date
 private const val TAG = "FolderListViewMode"
 
 
-class FolderListViewModel(application: Application) : AndroidViewModel(application) {
+class MediaStoreViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val _uiState = MutableStateFlow(GalleryUiState(loading = true))
@@ -63,7 +63,6 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
 
 
 
-    /////////////////
     fun setSelectedBucket(bucketId: Long, bucketLabel: String, size: Int, type: String) {
 
         val selectedFolder = if (GalleryRoute.IMAGE == type) {
@@ -73,7 +72,6 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
         } else {
             null
         }
-         Log.e(TAG, "showFilesInFolder: JJJJJJJJ >>> ${uiState.value.selectedBucketId}")
 
         _uiState.value = _uiState.value.copy(
             numberOfMediaFiles = size,
@@ -85,10 +83,8 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
 
             _filesInFolder.emit(emptyList())
-            Log.e(TAG, "showFilesInFolder: LLLL L>>> ${uiState.value.selectedBucketId}")
 
-            loadMediasInsideFolder(typeOfFolder = type, bucketId = bucketId, bucketName = bucketLabel, size = size).collect {
-                Log.e(TAG, "showFilesInFolder: MMMMMM ${it.fileName} >>> ${uiState.value.selectedBucketId}")
+            loadMediasInsideFolder(typeOfFolder = type, bucketId = bucketId, bucketName = bucketLabel, size = size,).collect {
                 _filesInFolder.value += it
             }
         }
@@ -101,12 +97,12 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
             selectedBucketId = -1L,
             numberOfMediaFiles = -1,
             showFilesInsideFolder = false,
-
+              favoriteOnly   = false,
+          showAll   = false
             )
     }
 
 
-    ////////////////
     private val projection = arrayOf(
         MediaStore.Video.Media._ID,
         MediaStore.Video.Media.BUCKET_ID,
@@ -120,11 +116,11 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
         MediaStore.Video.Media.SIZE,
     )
 
-    private fun loadMediasInsideFolder(typeOfFolder: String = GalleryRoute.IMAGE, bucketId: Long, bucketName: String, size: Int): Flow<Media> = flow {
+    private fun loadMediasInsideFolder(typeOfFolder: String = GalleryRoute.IMAGE, bucketId: Long, bucketName: String, size: Int,    favoriteOnly: Boolean  = false, showAll: Boolean  = false): Flow<Media> = flow {
 
         val externalUri = getExternalMediaUri(typeOfFolder)
-        val selection = "${MediaStore.Video.Media.BUCKET_DISPLAY_NAME} = ?" //"${MediaStore.Video.Media.BUCKET_DISPLAY_NAME} = ?"
-        val selectionArgs = arrayOf(bucketName) //arrayOf("DD_FILLED") //null //arrayOf(  TimeUnit.MILLISECONDS.convert(5, TimeUnit.MINUTES).toString())
+        val selection = if(favoriteOnly||showAll){null}else{"${MediaStore.Video.Media.BUCKET_DISPLAY_NAME} = ?"}
+        val selectionArgs =if(favoriteOnly||showAll){null}else{ arrayOf(bucketName)}
         val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC"
         val cursor = contentResolver.query(externalUri, projection, selection, selectionArgs, sortOrder) ?: return@flow
 
@@ -239,9 +235,19 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
 }
 
 data class GalleryUiState(
-    val imageFolders: List<Media> = emptyList(), val videoFolders: List<Media> = emptyList(),
+    val imageFolders: List<Media> = emptyList(),
+    val videoFolders: List<Media> = emptyList(),
 
-    val imageList: List<Media> = emptyList(), val videoList: List<Media> = emptyList(),
+    val imageList: List<Media> = emptyList(),
+    val videoList: List<Media> = emptyList(),
 
-    val selectedType: String = GalleryRoute.IMAGE, val numberOfMediaFiles: Int = 1, val folderName: String = "", val selectedBucketId: Long = 1L, val selectedMedia: Media? = null, val showFilesInsideFolder: Boolean = false, val loading: Boolean = false, val error: String? = null
+    val selectedType: String = GalleryRoute.IMAGE,//
+    val numberOfMediaFiles: Int = 1,
+    val folderName: String = "" ,//
+    val selectedBucketId: Long = 1L,
+    val selectedMedia: Media? = null,
+    val showFilesInsideFolder: Boolean = false,
+    val loading: Boolean = false,
+    val favoriteOnly: Boolean  = false,
+    val showAll: Boolean  = false
 )

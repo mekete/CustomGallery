@@ -23,7 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kerod.gallery.state.FolderListViewModel
+import com.kerod.gallery.state.MediaStoreViewModel
 import com.kerod.gallery.state.GalleryUiState
 import com.kerod.gallery.R
 import com.kerod.gallery.data.Media
@@ -72,7 +72,7 @@ fun MediaListScreen(
 
 @Composable
 fun FolderListScreen(
-    modifier: Modifier = Modifier, viewModel: FolderListViewModel = viewModel(), currentView: String, albumList: List<Media>, emailLazyListState: LazyListState, selectedMedia: Media? = null, navigateToDetail: (Long, String, Int, String) -> Unit
+    modifier: Modifier = Modifier, viewModel: MediaStoreViewModel = viewModel(), currentView: String, albumList: List<Media>, emailLazyListState: LazyListState, selectedMedia: Media? = null, navigateToDetail: (Long, String, Int, String) -> Unit
 ) {
 
     val imageFolders by if (GalleryRoute.MOVIE.equals(currentView)) {
@@ -84,16 +84,14 @@ fun FolderListScreen(
         item {
             PseudoSearchBar(modifier = Modifier.fillMaxWidth())
         }
-//        item {
-//            RequestPermission()
-//        }
+
         item {
             Row(modifier = Modifier
                     .fillMaxWidth()
                     .height(92.dp)
                     .padding(bottom = 16.dp), horizontalArrangement = Arrangement.SpaceBetween) { //                //all movies
                 CommonFolder(modifier = modifier, currentView = currentView, labelResource = if(currentView == GalleryRoute.IMAGE){R.string.all_image}else{R.string.all_video}, icon = if(currentView == GalleryRoute.IMAGE){Icons.Default.Image}else{Icons.Default.VideoFile} ,  isSelected = false) { bucketId, bucketLabel, size, type ->
-                    navigateToDetail(bucketId , bucketLabel , size , type)
+                    navigateToDetail(bucketId , bucketLabel , size , type,)
                 } //all
                 CommonFolder(modifier = modifier, currentView = currentView, labelResource = R.string.favorites, icon = Icons.Default.Favorite, isSelected = true) { bucketId , bucketLabel , size , type ->
                     navigateToDetail(bucketId , bucketLabel , size , type)
@@ -111,7 +109,7 @@ fun FolderListScreen(
 
 @Composable
 fun MediaListScreen(
-    modifier: Modifier = Modifier, viewModel: FolderListViewModel = viewModel(), albumName: String, albumSize: Int, isFullScreen: Boolean = true, onBackPressed: () -> Unit = {}
+    modifier: Modifier = Modifier, viewModel: MediaStoreViewModel = viewModel(), albumName: String, albumSize: Int, isFullScreen: Boolean = true, onBackPressed: () -> Unit = {}
 ) {
 
     val filesInFolder by  viewModel.filesInFolder.collectAsState()
