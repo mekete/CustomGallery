@@ -38,13 +38,14 @@ ed to provide an intuitive and user-friendly interface for viewing images and vi
 
 1. Clone the repository to your local machine.
    ```bash
-   git clone https://github.com/mekete/custom-gallery.git
-   cd custom-gallery-app
-
-![ImageLight.jpeg](output%2FScreenshot%2FImageLight.jpeg)
+   git clone https://github.com/mekete/CustomGallery.git
+   cd CustomGallery
+   
+![ImageLight.jpeg](https://raw.githubusercontent.com/mekete/CustomGallery/main/output/Screenshot/ImageLight.jpeg)
  
-![ImageDark.jpeg](output%2FScreenshot%2FImageDark.jpeg)
+![ImageDark.jpeg](https://raw.githubusercontent.com/mekete/CustomGallery/main/output/Screenshot/ImageDark.jpeg)
 
-![Settings.jpeg](output%2FScreenshot%2FSettings.jpeg)
+![Settings.jpeg](https://raw.githubusercontent.com/mekete/CustomGallery/main/output/Screenshot/Settings.jpeg)
 
-![Videos.jpeg](output%2FScreenshot%2FVideos.jpeg)
+![Videos.jpeg](https://raw.githubusercontent.com/mekete/CustomGallery/main/output/Screenshot/Videos.jpeg)
+
