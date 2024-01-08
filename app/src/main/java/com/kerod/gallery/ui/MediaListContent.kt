@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.VideoFile
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,7 +47,7 @@ fun MediaListScreen(
     val emailLazyListState = rememberLazyListState()
 
     Box(modifier = modifier.fillMaxSize()) {
-        if (galleryUiState.selectedMedia != null && galleryUiState.isDetailOnlyOpen) {
+        if (galleryUiState.selectedMedia != null && galleryUiState.showFilesInsideFolder) {
             BackHandler {
                 closeMediaListScreen()
             }

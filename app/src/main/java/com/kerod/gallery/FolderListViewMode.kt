@@ -17,12 +17,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import java.util.Date
-import java.util.Locale
 
 private const val TAG = "FolderListViewMode"
 
@@ -32,17 +30,15 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
 
     private val _imageFolders: MutableStateFlow<List<Media>> = MutableStateFlow(emptyList())
     private val _videoFolders: MutableStateFlow<List<Media>> = MutableStateFlow(emptyList())
-    private val _imageFiles: MutableStateFlow<List<Media>> = MutableStateFlow(emptyList())
-    private val _videoFiles: MutableStateFlow<List<Media>> = MutableStateFlow(emptyList())
+    private val _filesInFolder: MutableStateFlow<List<Media>> = MutableStateFlow(emptyList())
 
     //
     val imageFolders: StateFlow<List<Media>> = _imageFolders.asStateFlow()
     val videoFolders: StateFlow<List<Media>> = _videoFolders.asStateFlow()
-    val imageFiles: StateFlow<List<Media>> = _imageFiles.asStateFlow()
-    val videoFiles: StateFlow<List<Media>> = _videoFiles.asStateFlow()
-
+    val filesInFolder: StateFlow<List<Media>> = _filesInFolder.asStateFlow()
+ 
     init {
-        loadFolderInDirectory()
+        initLoadingFolder()
     }
 
     private val projection = arrayOf(
@@ -58,31 +54,32 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
         MediaStore.Video.Media.SIZE,
     )
 
-    private fun loadFolderInDirectory() {
+    private fun initLoadingFolder() {
         viewModelScope.launch {
-//            loadFolderInDirectory(typeOfFolder = GalleryRoute.IMAGE, folder = true).collect {
-//                _imageFolders.value += it
-//            }
-//            loadFolderInDirectory(typeOfFolder = GalleryRoute.MOVIE, folder = true).collect {
-//                _videoFolders.value += it
-//            }
-            loadMediasInFolder(contentResolver, GalleryRoute.IMAGE).collect{
+
+            loadFoldersContainingMedia(contentResolver, GalleryRoute.IMAGE).collect{
                 _imageFolders.value += it
             }
-            loadMediasInFolder(contentResolver, GalleryRoute.MOVIE).collect{
+            loadFoldersContainingMedia(contentResolver, GalleryRoute.MOVIE).collect{
                 _videoFolders.value += it
             }
         }
      }
+    private fun initLoadingFilesInFolder(typeOfFolder: String = GalleryRoute.IMAGE, bucketId: Long, bucketName: String, size:Int) {
+        viewModelScope.launch {
+            loadMediasInsideFolder(typeOfFolder  = typeOfFolder, bucketId=bucketId, bucketName=bucketName , size=size).collect{
+                 _imageFolders.value += it
+            } 
+        }
+    }
 
-    private fun loadFolderInDirectory(typeOfFolder: String = GalleryRoute.IMAGE, folder: Boolean): Flow<Media> = flow {
+    private fun loadMediasInsideFolder(typeOfFolder: String = GalleryRoute.IMAGE, bucketId: Long, bucketName: String, size:Int): Flow<Media> = flow {
 
         val externalUri = getExternalMediaUri(typeOfFolder)
-        val selection = "${MediaStore.Video.Media.BUCKET_DISPLAY_NAME} = ?"
-        val selectionArgs = arrayOf("DD_FILLED") //null //arrayOf(  TimeUnit.MILLISECONDS.convert(5, TimeUnit.MINUTES).toString())
-        val mediaUri = getExternalMediaUri(typeOfFolder)
+        val selection = "${MediaStore.Video.Media.BUCKET_DISPLAY_NAME} = ?"//"${MediaStore.Video.Media.BUCKET_DISPLAY_NAME} = ?"
+        val selectionArgs = arrayOf( bucketName) //arrayOf("DD_FILLED") //null //arrayOf(  TimeUnit.MILLISECONDS.convert(5, TimeUnit.MINUTES).toString())
         val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC"
-        val cursor = contentResolver.query(mediaUri, projection, selection, selectionArgs, sortOrder) ?: return@flow
+        val cursor = contentResolver.query(externalUri, projection, selection, selectionArgs, sortOrder) ?: return@flow
 
         val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
         val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
@@ -126,7 +123,7 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
         }
     }.flowOn(Dispatchers.IO)
 
-    private fun loadMediasInFolder(contentResolver: ContentResolver, typeOfFolder: String): Flow<Media> = flow {
+    private fun loadFoldersContainingMedia(contentResolver: ContentResolver, typeOfFolder: String): Flow<Media> = flow {
 
         val externalUri = getExternalMediaUri(typeOfFolder)
         val selection = null //"${MediaStore.Video.Media.DURATION} >= ?"
