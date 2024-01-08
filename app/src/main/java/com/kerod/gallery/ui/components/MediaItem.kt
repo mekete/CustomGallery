@@ -76,7 +76,7 @@ fun MediaItem(
                     .background(MaterialTheme.colorScheme.surface)
             ) {
                 Icon(
-                    imageVector = if (album.isStarred) Icons.Default.Star else Icons.Default.StarBorder,
+                    imageVector = if (album.favorite) Icons.Default.Star else Icons.Default.StarBorder,
                     contentDescription = "Favorite",
                 )
             }

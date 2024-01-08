@@ -43,7 +43,7 @@ class OrmUtl {
 
                 // val thumbnail: Bitmap = context.contentResolver.loadThumbnail(contentUri, Size(640, 480), null)
                 // Stores column values and the contentUri in a local object that represents the media file.
-                videoList += Media(id = id, mediaUri = contentUri, fileName = name, duration = duration, size = size, avatar = R.drawable.avatar_1)
+                videoList += Media(id = id, contentUri = contentUri, fileName = name, duration = duration, size = size, avatar = R.drawable.avatar_1)
 
 
                 val folderPath = imagePath.substring(0, imagePath.lastIndexOf('/'))

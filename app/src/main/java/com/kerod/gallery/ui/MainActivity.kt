@@ -23,9 +23,6 @@ class MainActivity : ComponentActivity() {
 
             AppTheme {
                 Surface(tonalElevation = 5.dp) {
-//                    val aa =MediaUtil()
-//                    val context = LocalContext.current
-//                    aa.listVideos(context = context)
                     GalleryApp(
                         galleryUiState = uiState,
                         closeFileListScreen = { viewModel.closeDetailScreen() },
@@ -50,7 +47,7 @@ class MainActivity : ComponentActivity() {
 //    AppTheme {
 //        GalleryApp(
 //            galleryUiState = GalleryUiState(
-//                albums = LocalEmailsDataProvider.imageFolderList
+//                albums = LocalDataProvider.imageFolderList
 //            )
 //        )
 //    }

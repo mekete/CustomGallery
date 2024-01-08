@@ -2,25 +2,25 @@ package com.kerod.gallery.data
 
 import com.kerod.gallery.R
 
-object LocalEmailsDataProvider {
+object LocalDataProvider {
 
     private val childMediaList:List<Media> =
 
         listOf(
         Media(
             id = 8L,
-            mediaFileList = listOf(LocalEmailsDataProvider.getDefaultUserAccount()),
+            mediaFileList = listOf(LocalDataProvider.getDefaultUserAccount()),
             fileName = "Your update on Google Play Store is live!",
-            isStarred = true,
+            favorite = true,
             mediaType = MediaType.CAMERA,
             createdAt = "3 hours ago",
         ),
         Media(
             id = 2L,
-            mediaFileList = listOf(LocalEmailsDataProvider.getDefaultUserAccount()),
+            mediaFileList = listOf(LocalDataProvider.getDefaultUserAccount()),
             fileName = "Bonjour from Paris",
             mediaType = MediaType.MOVIE,
-            isStarred = true,
+            favorite = true,
             createdAt = "1 hour ago",
         ),
     )
@@ -30,7 +30,7 @@ object LocalEmailsDataProvider {
             id = 0L,
             fileName = "Image Package shipped!",
             createdAt = "20 mins ago",
-            isStarred = true,
+            favorite = true,
             mediaFileList = childMediaList,
         ),
         Media(
@@ -53,7 +53,7 @@ object LocalEmailsDataProvider {
             id = 0L,
             fileName = "Movie 1",
             createdAt = "20 mins ago",
-            isStarred = true,
+            favorite = true,
             mediaFileList = childMediaList,
         ),
         Media(
@@ -83,11 +83,10 @@ object LocalEmailsDataProvider {
     fun getDefaultUserAccount() = //allUserMedia.first()
         Media(
             id = 1L,
-            uid = 0L,
             fileName = "Jeff",
             email = "hikingfan@gmail.com",
             size = 200,
             avatar = R.drawable.avatar_1,
-            isStarred = true
+            favorite = true
         )
 }

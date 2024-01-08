@@ -37,7 +37,7 @@ fun ReplyEmailListItem(
             .semantics { selected = isSelected }
             .clickable { navigateToDetail(album.id) },
         colors = CardDefaults.cardColors(
-            containerColor = if (album.isStarred)
+            containerColor = if (album.favorite)
                 MaterialTheme.colorScheme.secondaryContainer
             else MaterialTheme.colorScheme.surfaceVariant
         )

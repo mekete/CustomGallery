@@ -13,8 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kerod.gallery.data.Media
-import com.kerod.gallery.ui.components.MediaListAppBar
 import com.kerod.gallery.ui.components.MediaItem
+import com.kerod.gallery.ui.components.MediaListAppBar
 import com.kerod.gallery.ui.components.ReplyEmailListItem
 import com.kerod.gallery.ui.components.ReplySearchBar
 
@@ -40,17 +40,18 @@ fun MediaListScreen(
             }
         } else {
             val albums = if (currentView == GalleryRoute.IMAGE) {
-                galleryUiState.albumFolders
+                galleryUiState.videoFolders
             } else {
-                galleryUiState.albumFolders
+                galleryUiState.videoFolders
             }
-            AlbumListScreen(albumList = albums, emailLazyListState = emailLazyListState, modifier = modifier, navigateToDetail = navigateToMediaListScreen)
-        }    }
+            FolderListScreen(albumList = albums, emailLazyListState = emailLazyListState, modifier = modifier, navigateToDetail = navigateToMediaListScreen)
+        }
+    }
 }
 
 
 @Composable
-fun AlbumListScreen(
+fun FolderListScreen(
     modifier: Modifier = Modifier, albumList: List<Media>, emailLazyListState: LazyListState, selectedMedia: Media? = null, navigateToDetail: (Long) -> Unit
 ) {
     LazyColumn(modifier = modifier, state = emailLazyListState) {
