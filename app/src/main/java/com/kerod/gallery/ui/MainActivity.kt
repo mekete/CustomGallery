@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.kerod.gallery.util.openAppSettings
 
 class MainActivity : ComponentActivity() {
 
@@ -105,7 +106,6 @@ class MainActivity : ComponentActivity() {
                 confirmButton = {
                     Button(
                         onClick = {
-                            Log.e("TAG", "RequestPermission: XXXXX ", )
                             showDialog = false
                             activity .openAppSettings()
                         }
@@ -119,19 +119,6 @@ class MainActivity : ComponentActivity() {
 
     }
 
-    fun Activity.openAppSettings() {
-        val intent = Intent().apply {
-            action = when {
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
-                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                }
-                else -> {
-                    Intent.ACTION_APPLICATION_PREFERENCES
-                }
-            }
-            data = android.net.Uri.parse("package:$packageName")
-        }
-        startActivity(intent)
-    }
+
 
 }

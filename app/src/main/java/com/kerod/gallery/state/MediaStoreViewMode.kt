@@ -198,10 +198,8 @@ class MediaStoreViewModel(application: Application) : AndroidViewModel(applicati
 
 
                     if (previouslyAdded != null) {
-                        Log.e(TAG, "\n\n>>>>>>>IIIII ${folder.size} ${folder.bucketDisplayName}: ${folder.fileName} ")
                         previouslyAdded.size += 1
                     } else {
-                        Log.e(TAG, "\n\n>>>>>>>JJJJ ${folder.size} ${folder.bucketDisplayName}: ${folder.fileName} ")
                         folders.add(folder)
                     }
 
@@ -209,7 +207,6 @@ class MediaStoreViewModel(application: Application) : AndroidViewModel(applicati
             }
 
             folders.forEach { folder ->
-                Log.e(TAG, "\n\n>>>>>>>KKKKK ${folder.size} ${folder.bucketDisplayName}: ${folder.fileName} ")
                 emit(folder)
             }
         }

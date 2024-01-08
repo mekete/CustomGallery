@@ -1,9 +1,13 @@
 package com.kerod.gallery.util
+import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -38,4 +42,18 @@ fun Date.toFormattedDateString(): String {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
     //        val date = Date(this)
     return dateFormat.format(this)
+}
+fun Activity.openAppSettings() {
+    val intent = Intent().apply {
+        action = when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            }
+            else -> {
+                Intent.ACTION_APPLICATION_PREFERENCES
+            }
+        }
+        data = android.net.Uri.parse("package:$packageName")
+    }
+    startActivity(intent)
 }

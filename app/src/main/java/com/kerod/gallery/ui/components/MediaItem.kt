@@ -37,7 +37,6 @@ import com.kerod.gallery.R
 import com.kerod.gallery.data.Media
 
 private const val TAG = "MediaItem"
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MediaItem(
     album: Media,
@@ -46,9 +45,7 @@ fun MediaItem(
 
     Card(modifier = modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)
-            //.semantics { selected = isSelected }
             .clickable {
-                //navigateToDetail(album.bucketId, album.bucketDisplayName, album.size, currentView)
             }, colors = CardDefaults.cardColors(containerColor = if (album.favorite) MaterialTheme.colorScheme.secondaryContainer
     else MaterialTheme.colorScheme.surfaceVariant)) {
         Column(modifier = Modifier
@@ -90,9 +87,6 @@ fun MediaItem(
                         )
                     }
                 }
-            } else {
-                Log.e(TAG, "\n\n\nFolderItem::::\n\n\n${album.fileName} >>>>")
-
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.kerod.gallery.ui
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,12 +22,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kerod.gallery.state.MediaStoreViewModel
-import com.kerod.gallery.state.GalleryUiState
 import com.kerod.gallery.R
 import com.kerod.gallery.data.Media
-import com.kerod.gallery.ui.components.FolderItem
+import com.kerod.gallery.state.GalleryUiState
+import com.kerod.gallery.state.MediaStoreViewModel
 import com.kerod.gallery.ui.components.CommonFolder
+import com.kerod.gallery.ui.components.FolderItem
 import com.kerod.gallery.ui.components.MediaItem
 import com.kerod.gallery.ui.components.MediaListAppBar
 import com.kerod.gallery.ui.components.PseudoSearchBar
@@ -48,7 +47,6 @@ fun MediaListScreen(
 
     Box(modifier = modifier.fillMaxSize()) {
         if (galleryUiState.selectedBucketId != -1L   && galleryUiState.showFilesInsideFolder) {
-            Log.e(TAG, "MediaListScreen:  OOOOOO", )
             BackHandler {
                 closeMediaListScreen()
             }
@@ -57,7 +55,6 @@ fun MediaListScreen(
                 closeMediaListScreen()
             }
         } else {
-            Log.e(TAG, "MediaListScreen:  PPPPPPP", )
             val albums = if (currentView == GalleryRoute.IMAGE) {
                 galleryUiState.videoFolders
             } else {
