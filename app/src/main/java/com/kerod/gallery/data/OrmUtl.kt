@@ -1,4 +1,4 @@
-package com.kerod.gallery.data;
+package com.kerod.gallery.data
 
 
 import android.content.ContentResolver

@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -31,8 +30,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -72,9 +69,9 @@ fun MediaItem(
                             .weight(1f)
                             .padding(horizontal = 12.dp, vertical = 4.dp), verticalArrangement = Arrangement.Center) {
 
-                        Text(text = album.bucketDisplayName, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(text = album.fileName, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Text(
-                            text = "\nFiles: ${album.size}\nCreated:${album.createdAt}",
+                            text = "\nFolder: ${album.bucketDisplayName}\nCreated:${album.createdAt}",
                             style = MaterialTheme.typography.labelMedium,
                         )
                         Button(

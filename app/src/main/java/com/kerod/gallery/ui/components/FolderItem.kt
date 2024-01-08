@@ -66,16 +66,16 @@ fun FolderItem(
 
                         Text(text = album.bucketDisplayName, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Text(
-                            text = "\nFiles: ${album.size}\nCreated:${album.createdAt}",
+                            text = "\nFiles: ${album.size}\nCreated: ${album.createdAt}",
                             style = MaterialTheme.typography.labelMedium,
                         )
                     }
-                    IconButton(onClick = { /*Click Implementation*/ }, modifier = Modifier.clip(CircleShape)) {
-                        Icon(
-                            imageVector = Icons.Default.StarBorder,
-                            contentDescription = "Favorite",
-                        )
-                    }
+//                    IconButton(onClick = { /*Click Implementation*/ }, modifier = Modifier.clip(CircleShape)) {
+//                        Icon(
+//                            imageVector = Icons.Default.StarBorder,
+//                            contentDescription = "Favorite",
+//                        )
+//                    }
                 }
             } else {
                 Log.e(TAG, "\n\n\nFolderItem::::\n\n\n${album.fileName} >>>>")

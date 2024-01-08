@@ -9,7 +9,7 @@ object LocalEmailsDataProvider {
         listOf(
         Media(
             id = 8L,
-            mediaFileList = listOf(LocalEmailsDataProvider.getDefaultUserAccount()),
+            mediaFileList = listOf(getDefaultUserAccount()),
             fileName = "Your update on Google Play Store is live!",
             favorite = true,
             mediaType = MediaType.CAMERA,
@@ -17,7 +17,7 @@ object LocalEmailsDataProvider {
         ),
         Media(
             id = 2L,
-            mediaFileList = listOf(LocalEmailsDataProvider.getDefaultUserAccount()),
+            mediaFileList = listOf(getDefaultUserAccount()),
             fileName = "Bonjour from Paris",
             mediaType = MediaType.MOVIE,
             favorite = true,

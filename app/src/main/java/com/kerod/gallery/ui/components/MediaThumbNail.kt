@@ -62,14 +62,7 @@ fun SampleScreen() {
         val placeholder = R.drawable.avatar_1
         val imageUrl = "https://image_url.jpg"
 
-        val listener = object : ImageRequest.Listener {
-            override fun onError(request: ImageRequest, result: ErrorResult) {
-                super.onError(request, result)
-            }
-            override fun onSuccess(request: ImageRequest, result: SuccessResult) {
-                super.onSuccess(request, result)
-            }
-        }
+        val listener = object : ImageRequest.Listener {}
 
 
 

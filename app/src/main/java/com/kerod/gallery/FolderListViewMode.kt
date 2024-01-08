@@ -95,7 +95,7 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
 
     fun closeDetailScreen() {
         _uiState.value = _uiState.value.copy(
-            selectedMedia = _uiState.value.videoFolders.first(),
+            //selectedMedia = _uiState.value.videoFolders.first(),
             //
             selectedBucketId = -1L,
             numberOfMediaFiles = -1,
