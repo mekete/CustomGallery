@@ -23,11 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.kerod.gallery.FolderListViewModel
+import com.kerod.gallery.GalleryUiState
 import com.kerod.gallery.R
 
 @Composable
 fun GalleryContent(
-    modifier: Modifier = Modifier,application : Application, galleryUiState: GalleryUiState, closeFileListScreen: () -> Unit = {}, navigateToFileListScreen: (Long,String,Int,String) -> Unit = {bucketId,bucketLabel,size, type->
+    modifier: Modifier = Modifier,application : Application, galleryUiState:  GalleryUiState, closeFileListScreen: () -> Unit = {}, navigateToFileListScreen: (Long,String,Int,String) -> Unit = {bucketId,bucketLabel,size, type->
 
     }
 ) {

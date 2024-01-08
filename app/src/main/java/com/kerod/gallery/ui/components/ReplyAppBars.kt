@@ -83,7 +83,7 @@ fun MediaListAppBar(
                 )
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
-                    text = "$albumSize ${stringResource(id = R.string.messages)}",
+                    text = "$albumSize ${stringResource(id = R.string.media_files)}",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.outline
                 )

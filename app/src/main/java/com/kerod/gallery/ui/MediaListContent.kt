@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.VideoFile
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kerod.gallery.FolderListViewModel
+import com.kerod.gallery.GalleryUiState
 import com.kerod.gallery.R
 import com.kerod.gallery.data.Media
 import com.kerod.gallery.ui.components.FolderItem
@@ -39,7 +39,7 @@ private const val TAG = "MediaListContent"
 fun MediaListScreen(
     modifier: Modifier = Modifier,
     currentView: String = GalleryRoute.IMAGE,
-    galleryUiState: GalleryUiState,
+    galleryUiState:  GalleryUiState,
     closeMediaListScreen: () -> Unit,
     navigateToMediaListScreen: (Long, String, Int,String) -> Unit,
 ) {
@@ -47,15 +47,17 @@ fun MediaListScreen(
     val emailLazyListState = rememberLazyListState()
 
     Box(modifier = modifier.fillMaxSize()) {
-        if (galleryUiState.selectedMedia != null && galleryUiState.showFilesInsideFolder) {
+        if (galleryUiState.selectedBucketId != -1L   && galleryUiState.showFilesInsideFolder) {
+            Log.e(TAG, "MediaListScreen:  OOOOOO", )
             BackHandler {
                 closeMediaListScreen()
             }
-            val albumList = galleryUiState.selectedMedia.mediaFileList
-            MediaListScreen(mediaList = albumList, albumName = galleryUiState.selectedMedia.fileName, albumSize = galleryUiState.selectedMedia.size) {
+             MediaListScreen(  albumName = galleryUiState.folderName,
+                 albumSize = galleryUiState.numberOfMediaFiles) {
                 closeMediaListScreen()
             }
         } else {
+            Log.e(TAG, "MediaListScreen:  PPPPPPP", )
             val albums = if (currentView == GalleryRoute.IMAGE) {
                 galleryUiState.videoFolders
             } else {
@@ -67,18 +69,6 @@ fun MediaListScreen(
 }
 
 
-@Composable
-fun FolderListContent(viewModel: FolderListViewModel = viewModel()) {
-    val folders by viewModel.imageFolders.collectAsState()
-    Log.e(TAG, "FolderListContent: ${folders.size}")
-
-    LazyColumn {
-        items(folders) { folder ->
-            Text(text = folder.bucketDisplayName)
-            Log.e(TAG, "FolderListContent: ${folder.bucketDisplayName}")
-        }
-    }
-}
 
 @Composable
 fun FolderListScreen(
@@ -118,15 +108,18 @@ fun FolderListScreen(
 
 @Composable
 fun MediaListScreen(
-    modifier: Modifier = Modifier, albumName: String, albumSize: Int, mediaList: List<Media>, isFullScreen: Boolean = true, onBackPressed: () -> Unit = {}
+    modifier: Modifier = Modifier, viewModel: FolderListViewModel = viewModel(),albumName: String, albumSize: Int,  isFullScreen: Boolean = true, onBackPressed: () -> Unit = {}
 ) {
+
+    val filesInFolder by  viewModel.filesInFolder.collectAsState()
+
     LazyColumn(modifier = modifier.padding(top = 16.dp)) {
         item {
             MediaListAppBar(albumName, albumSize, isFullScreen) {
                 onBackPressed()
             }
         }
-        items(items = mediaList, key = { it.id }) { media ->
+        items(items = filesInFolder, key = { it.id }) { media ->
             MediaItem(album = media)
         }
     }

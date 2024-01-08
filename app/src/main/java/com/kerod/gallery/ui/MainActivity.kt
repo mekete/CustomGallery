@@ -13,11 +13,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kerod.gallery.FolderListViewModel
 import com.kerod.gallery.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: FolderListViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 23)
