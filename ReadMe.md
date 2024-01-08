@@ -1,6 +1,7 @@
 # Custom Gallery App
 
-This custom gallery app is designed to provide an intuitive and user-friendly interface for viewing images and videos on your device. The app organizes media content into album views, making it easy to navigate through folders and find specific images or videos. Additionally, the app includes special folders like "All Images," "All Videos," and "Camera" for convenient access to media files.
+This custom gallery app is design
+ed to provide an intuitive and user-friendly interface for viewing images and videos on your device. The app organizes media content into album views, making it easy to navigate through folders and find specific images or videos. Additionally, the app includes special folders like "All Images," "All Videos," and "Camera" for convenient access to media files.
 
 ## Features
 
@@ -39,3 +40,11 @@ This custom gallery app is designed to provide an intuitive and user-friendly in
    ```bash
    git clone https://github.com/mekete/custom-gallery.git
    cd custom-gallery-app
+
+![ImageLight.jpeg](output%2FScreenshot%2FImageLight.jpeg)
+ 
+![ImageDark.jpeg](output%2FScreenshot%2FImageDark.jpeg)
+
+![Settings.jpeg](output%2FScreenshot%2FSettings.jpeg)
+
+![Videos.jpeg](output%2FScreenshot%2FVideos.jpeg)
