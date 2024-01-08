@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.kerod.compose.*
 
-// Material 3 color schemes
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,

@@ -59,7 +59,7 @@ fun MediaThumbNail(
 fun SampleScreen() {
     Surface(modifier = Modifier.fillMaxSize()) {
         val context = LocalContext.current
-        val placeholder = R.drawable.avatar_1
+        val placeholder = R.drawable.avatar_0
         val imageUrl = "https://image_url.jpg"
 
         val listener = object : ImageRequest.Listener {

@@ -1,5 +1,6 @@
 package com.kerod.gallery.ui
 
+import android.app.Application
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,8 +26,10 @@ import androidx.compose.ui.unit.dp
 import com.kerod.gallery.R
 
 @Composable
-fun GalleryApp(
-    modifier: Modifier = Modifier, galleryUiState: GalleryUiState, closeFileListScreen: () -> Unit = {}, navigateToFileListScreen: (Long) -> Unit = {}
+fun GalleryContent(
+    modifier: Modifier = Modifier,application : Application, galleryUiState: GalleryUiState, closeFileListScreen: () -> Unit = {}, navigateToFileListScreen: (Long,String,Int,String) -> Unit = {bucketId,bucketLabel,size, type->
+
+    }
 ) {
     Surface(tonalElevation = 5.dp) {
 
@@ -43,7 +46,7 @@ fun GalleryApp(
                     MediaListScreen(currentView = GalleryRoute.MOVIE, galleryUiState = galleryUiState, closeMediaListScreen = closeFileListScreen, navigateToMediaListScreen = navigateToFileListScreen, modifier = Modifier.weight(1f))
                 }
                 else -> {
-                    EmptyComingSoon(currentView = GalleryRoute.MOVIE, galleryUiState = galleryUiState, closeMediaListScreen = closeFileListScreen, navigateToMediaListScreen = navigateToFileListScreen, modifier = Modifier.weight(1f))
+                    SettingsScreen(currentView = GalleryRoute.SETTING, galleryUiState = galleryUiState, closeMediaListScreen = closeFileListScreen, navigateToMediaListScreen = navigateToFileListScreen, modifier = Modifier.weight(1f))
                 }
             }
 

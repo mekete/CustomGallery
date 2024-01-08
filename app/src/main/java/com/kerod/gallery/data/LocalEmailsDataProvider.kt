@@ -2,14 +2,14 @@ package com.kerod.gallery.data
 
 import com.kerod.gallery.R
 
-object LocalDataProvider {
+object LocalEmailsDataProvider {
 
     private val childMediaList:List<Media> =
 
         listOf(
         Media(
             id = 8L,
-            mediaFileList = listOf(LocalDataProvider.getDefaultUserAccount()),
+            mediaFileList = listOf(LocalEmailsDataProvider.getDefaultUserAccount()),
             fileName = "Your update on Google Play Store is live!",
             favorite = true,
             mediaType = MediaType.CAMERA,
@@ -17,7 +17,7 @@ object LocalDataProvider {
         ),
         Media(
             id = 2L,
-            mediaFileList = listOf(LocalDataProvider.getDefaultUserAccount()),
+            mediaFileList = listOf(LocalEmailsDataProvider.getDefaultUserAccount()),
             fileName = "Bonjour from Paris",
             mediaType = MediaType.MOVIE,
             favorite = true,
@@ -83,10 +83,11 @@ object LocalDataProvider {
     fun getDefaultUserAccount() = //allUserMedia.first()
         Media(
             id = 1L,
+//            uid = 0L,
             fileName = "Jeff",
             email = "hikingfan@gmail.com",
             size = 200,
-            avatar = R.drawable.avatar_1,
+            avatar = R.drawable.avatar_10,
             favorite = true
         )
 }

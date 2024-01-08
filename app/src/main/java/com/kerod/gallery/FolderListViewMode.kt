@@ -11,15 +11,18 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.kerod.gallery.data.Media
 import com.kerod.gallery.ui.GalleryRoute
+import com.kerod.gallery.util.toFormattedDateString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import java.util.Date
+import java.util.Locale
 
 private const val TAG = "FolderListViewMode"
 
@@ -57,15 +60,20 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
 
     private fun loadFolderInDirectory() {
         viewModelScope.launch {
-            loadFolderInDirectory(typeOfFolder = GalleryRoute.IMAGE, folder = true).collect {
+//            loadFolderInDirectory(typeOfFolder = GalleryRoute.IMAGE, folder = true).collect {
+//                _imageFolders.value += it
+//            }
+//            loadFolderInDirectory(typeOfFolder = GalleryRoute.MOVIE, folder = true).collect {
+//                _videoFolders.value += it
+//            }
+            loadMediasInFolder(contentResolver, GalleryRoute.IMAGE).collect{
                 _imageFolders.value += it
             }
-            loadFolderInDirectory(typeOfFolder = GalleryRoute.MOVIE, folder = true).collect {
+            loadMediasInFolder(contentResolver, GalleryRoute.MOVIE).collect{
                 _videoFolders.value += it
             }
         }
-        loadImageFolders(contentResolver, GalleryRoute.MOVIE)
-    }
+     }
 
     private fun loadFolderInDirectory(typeOfFolder: String = GalleryRoute.IMAGE, folder: Boolean): Flow<Media> = flow {
 
@@ -102,7 +110,7 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
                     val album = row.getString(bucketNameColumn)
                     val favorite = row.getString(favoriteColumn)
                     val created = row.getLong(dateCreatedColumn)
-                    val date = Date(created * 1000) // Convert seconds to milliseconds
+                    val date = Date(created * 1000).toString() // Convert seconds to milliseconds
 
 
                     val contentUri: Uri = ContentUris.withAppendedId(externalUri, id)
@@ -110,7 +118,7 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
                     if (bucketDisplayName == null) {
                         continue
                     }
-                    val media = Media(id = id, contentUri = contentUri, bucketId = bucketId, bucketDisplayName = bucketDisplayName, fileName = fileName, duration = duration, size = size, createdAt = date.toString(), avatar = R.drawable.avatar_1)
+                    val media = Media(id = id, contentUri = contentUri, bucketId = bucketId, bucketDisplayName = bucketDisplayName, fileName = fileName, duration = duration, size = size, createdAt = date , avatar = R.drawable.avatar_1)
 
                     emit(media)
                 } while (row.moveToNext())
@@ -118,8 +126,7 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
         }
     }.flowOn(Dispatchers.IO)
 
-
-    private fun loadImageFolders(contentResolver: ContentResolver, typeOfFolder: String, bucketId:String=""): Flow<Media> = flow {
+    private fun loadMediasInFolder(contentResolver: ContentResolver, typeOfFolder: String): Flow<Media> = flow {
 
         val externalUri = getExternalMediaUri(typeOfFolder)
         val selection = null //"${MediaStore.Video.Media.DURATION} >= ?"
@@ -131,6 +138,7 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
         val pathColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
         val bucketIdIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_ID)
         val folderColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+        val dateCreatedColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED) //
 
         cursor.use { row ->
 
@@ -142,9 +150,10 @@ class FolderListViewModel(application: Application) : AndroidViewModel(applicati
                     val imagePath = row.getString(pathColumnIndex)
                     val bucketId = row.getLong(bucketIdIndex)
                     val bucketDisplayName = row.getString(folderColumnIndex) ?: continue
+                    val createdAt=  Date(row.getLong(dateCreatedColumn) * 1000).toFormattedDateString()
 
                     val contentUri: Uri = ContentUris.withAppendedId(externalUri, id)
-                    val folder = Media(id = id, bucketId = bucketId, bucketDisplayName = bucketDisplayName, fileName = imagePath, size = 1, contentUri = contentUri)
+                    val folder = Media(id = id, bucketId = bucketId, createdAt = createdAt, bucketDisplayName = bucketDisplayName, fileName = imagePath, size = 1, contentUri = contentUri)
                     val previouslyAdded = folders.find { it.bucketId == folder.bucketId }
 
 
