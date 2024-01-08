@@ -45,7 +45,8 @@ fun CommonFolder(
     Card(modifier = modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .semantics { selected = isSelected }
-            .clickable { }, colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)) {
+            .clickable { },
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)) {
         Column(modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)) {

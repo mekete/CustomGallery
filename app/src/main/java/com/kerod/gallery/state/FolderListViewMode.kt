@@ -1,4 +1,4 @@
-package com.kerod.gallery
+package com.kerod.gallery.state
 
 import android.app.Application
 import android.content.ContentResolver
@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.kerod.gallery.R
 import com.kerod.gallery.data.Media
 import com.kerod.gallery.ui.GalleryRoute
 import com.kerod.gallery.util.toFormattedDateString

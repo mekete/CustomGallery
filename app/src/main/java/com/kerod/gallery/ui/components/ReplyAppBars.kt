@@ -28,7 +28,7 @@ import com.kerod.gallery.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReplySearchBar(modifier: Modifier = Modifier) {
+fun PseudoSearchBar(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()

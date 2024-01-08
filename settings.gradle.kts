@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-rootProject.name = "Reply"
+rootProject.name = "CustomGallery"
 include(":app")

@@ -2,7 +2,7 @@
     <string name="app_name">Gallery</string>
     <string name="navigation_drawer">Navigation Drawer</string>
     <string name="tab_image">Image</string>
-    <string name="tab_movie">Movie</string>
+    <string name="tab_movie">Video</string>
     <string name="tab_setting">Setting</string>
 
     <string name="profile">Profile</string>

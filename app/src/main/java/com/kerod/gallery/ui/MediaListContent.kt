@@ -23,15 +23,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.kerod.gallery.FolderListViewModel
-import com.kerod.gallery.GalleryUiState
+import com.kerod.gallery.state.FolderListViewModel
+import com.kerod.gallery.state.GalleryUiState
 import com.kerod.gallery.R
 import com.kerod.gallery.data.Media
 import com.kerod.gallery.ui.components.FolderItem
 import com.kerod.gallery.ui.components.CommonFolder
 import com.kerod.gallery.ui.components.MediaItem
 import com.kerod.gallery.ui.components.MediaListAppBar
-import com.kerod.gallery.ui.components.ReplySearchBar
+import com.kerod.gallery.ui.components.PseudoSearchBar
 
 private const val TAG = "MediaListContent"
 
@@ -39,7 +39,7 @@ private const val TAG = "MediaListContent"
 fun MediaListScreen(
     modifier: Modifier = Modifier,
     currentView: String = GalleryRoute.IMAGE,
-    galleryUiState:  GalleryUiState,
+    galleryUiState: GalleryUiState,
     closeMediaListScreen: () -> Unit,
     navigateToMediaListScreen: (Long, String, Int,String) -> Unit,
 ) {
@@ -72,7 +72,7 @@ fun MediaListScreen(
 
 @Composable
 fun FolderListScreen(
-    modifier: Modifier = Modifier, viewModel: FolderListViewModel = viewModel(), currentView: String, albumList: List<Media>, emailLazyListState: LazyListState, selectedMedia: Media? = null, navigateToDetail: (Long, String, Int,String) -> Unit
+    modifier: Modifier = Modifier, viewModel: FolderListViewModel = viewModel(), currentView: String, albumList: List<Media>, emailLazyListState: LazyListState, selectedMedia: Media? = null, navigateToDetail: (Long, String, Int, String) -> Unit
 ) {
 
     val imageFolders by if (GalleryRoute.MOVIE.equals(currentView)) {
@@ -82,8 +82,11 @@ fun FolderListScreen(
     }
     LazyColumn(modifier = modifier, state = emailLazyListState) {
         item {
-            ReplySearchBar(modifier = Modifier.fillMaxWidth())
+            PseudoSearchBar(modifier = Modifier.fillMaxWidth())
         }
+//        item {
+//            RequestPermission()
+//        }
         item {
             Row(modifier = Modifier
                     .fillMaxWidth()
@@ -108,7 +111,7 @@ fun FolderListScreen(
 
 @Composable
 fun MediaListScreen(
-    modifier: Modifier = Modifier, viewModel: FolderListViewModel = viewModel(),albumName: String, albumSize: Int,  isFullScreen: Boolean = true, onBackPressed: () -> Unit = {}
+    modifier: Modifier = Modifier, viewModel: FolderListViewModel = viewModel(), albumName: String, albumSize: Int, isFullScreen: Boolean = true, onBackPressed: () -> Unit = {}
 ) {
 
     val filesInFolder by  viewModel.filesInFolder.collectAsState()
