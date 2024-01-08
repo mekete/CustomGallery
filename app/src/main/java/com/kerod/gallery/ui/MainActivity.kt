@@ -3,10 +3,12 @@ package com.kerod.gallery.ui
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -75,5 +77,23 @@ class MainActivity : ComponentActivity() {
             )
         }
     }
-
+    fun checkAndRequestLocationPermissions(
+        context: Context,
+        permissions: Array<String>,
+        launcher: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>
+    ) {
+        if (
+            permissions.all {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    it
+                ) == PackageManager.PERMISSION_GRANTED
+            }
+        ) {
+            // Use location because permissions are already granted
+        } else {
+            // Request permissions
+            launcher.launch(permissions)
+        }
+    }
 }

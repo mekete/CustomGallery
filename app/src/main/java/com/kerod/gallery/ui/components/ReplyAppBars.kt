@@ -51,7 +51,7 @@ fun ReplySearchBar(modifier: Modifier = Modifier) {
             color = MaterialTheme.colorScheme.outline
         )
         MediaThumbNail(
-            drawableResource = R.drawable.avatar_6,
+            drawableResource = R.drawable.avatar_1,
             description = stringResource(id = R.string.profile),
             modifier = Modifier
                 .padding(12.dp)

@@ -87,7 +87,7 @@ object LocalEmailsDataProvider {
             fileName = "Jeff",
             email = "hikingfan@gmail.com",
             size = 200,
-            avatar = R.drawable.avatar_10,
+            avatar = R.drawable.avatar_1,
             favorite = true
         )
 }
